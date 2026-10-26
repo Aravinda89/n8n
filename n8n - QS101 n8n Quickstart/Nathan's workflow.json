@@ -6,8 +6,8 @@
       "type": "n8n-nodes-base.manualTrigger",
       "typeVersion": 1,
       "position": [
-        -1680,
-        -336
+        -1648,
+        -304
       ],
       "id": "7bc87bbb-2f3f-4652-9a5f-7deef0c04f53",
       "name": "Trigger Manually"
@@ -64,8 +64,8 @@
       "type": "n8n-nodes-base.dataTable",
       "typeVersion": 1.1,
       "position": [
-        -784,
-        -528
+        -800,
+        -496
       ],
       "id": "2a76206b-445e-413f-ab9e-804ff12b478a",
       "name": "UpsertOrders"
@@ -97,7 +97,7 @@
       "type": "n8n-nodes-base.if",
       "typeVersion": 2.4,
       "position": [
-        -1168,
+        -1200,
         -384
       ],
       "id": "83e63d50-9372-4eec-8f3a-8e8c4f0b32a7",
@@ -126,8 +126,8 @@
       "type": "n8n-nodes-base.set",
       "typeVersion": 3.5,
       "position": [
-        -960,
-        -528
+        -992,
+        -496
       ],
       "id": "b15569e0-b2f4-46d3-a1ca-128fd93798fb",
       "name": "SetProcessingData"
@@ -139,7 +139,7 @@
       "type": "n8n-nodes-base.code",
       "typeVersion": 2,
       "position": [
-        -944,
+        -992,
         -288
       ],
       "id": "5dd3c4e6-2de7-4111-b28a-80dba4773e28",
@@ -154,7 +154,7 @@
       "type": "n8n-nodes-base.discord",
       "typeVersion": 2,
       "position": [
-        -768,
+        -784,
         -288
       ],
       "id": "079a3639-417d-4f26-baa9-95f295928253",
@@ -186,7 +186,7 @@
       "type": "n8n-nodes-base.httpRequest",
       "typeVersion": 4.5,
       "position": [
-        -1376,
+        -1424,
         -384
       ],
       "id": "86e78327-8436-4ece-a11c-1ebab556afb6",
@@ -215,8 +215,8 @@
       "type": "n8n-nodes-base.scheduleTrigger",
       "typeVersion": 1.4,
       "position": [
-        -1680,
-        -528
+        -1648,
+        -496
       ],
       "id": "112ba7f5-f688-4817-82a0-897e5f15031d",
       "name": "TriggerMondays9am"
@@ -298,12 +298,16 @@
       ]
     }
   },
-  "active": false,
+  "active": true,
   "settings": {
     "executionOrder": "v1",
-    "binaryMode": "separate"
+    "binaryMode": "separate",
+    "timeSavedMode": "fixed",
+    "callerPolicy": "workflowsFromSameOwner",
+    "executionTimeout": -1,
+    "availableInMCP": false
   },
-  "versionId": "21190e2c-1dc7-491b-b138-afe9576c47f3",
+  "versionId": "69a53575-5ae2-4023-acb7-b6f0f2b2190f",
   "meta": {
     "templateCredsSetupCompleted": true,
     "instanceId": "9daee64fcd4c60e294455109589ac2517740c253c2c006d9b408b51b7ced8ef9"
