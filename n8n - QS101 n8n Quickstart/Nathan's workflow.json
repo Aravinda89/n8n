@@ -6,7 +6,7 @@
       "type": "n8n-nodes-base.manualTrigger",
       "typeVersion": 1,
       "position": [
-        -1648,
+        -1776,
         -304
       ],
       "id": "7bc87bbb-2f3f-4652-9a5f-7deef0c04f53",
@@ -64,7 +64,7 @@
       "type": "n8n-nodes-base.dataTable",
       "typeVersion": 1.1,
       "position": [
-        -800,
+        -928,
         -496
       ],
       "id": "2a76206b-445e-413f-ab9e-804ff12b478a",
@@ -97,7 +97,7 @@
       "type": "n8n-nodes-base.if",
       "typeVersion": 2.4,
       "position": [
-        -1200,
+        -1328,
         -384
       ],
       "id": "83e63d50-9372-4eec-8f3a-8e8c4f0b32a7",
@@ -126,7 +126,7 @@
       "type": "n8n-nodes-base.set",
       "typeVersion": 3.5,
       "position": [
-        -992,
+        -1120,
         -496
       ],
       "id": "b15569e0-b2f4-46d3-a1ca-128fd93798fb",
@@ -139,7 +139,7 @@
       "type": "n8n-nodes-base.code",
       "typeVersion": 2,
       "position": [
-        -992,
+        -1120,
         -288
       ],
       "id": "5dd3c4e6-2de7-4111-b28a-80dba4773e28",
@@ -154,7 +154,7 @@
       "type": "n8n-nodes-base.discord",
       "typeVersion": 2,
       "position": [
-        -784,
+        -912,
         -288
       ],
       "id": "079a3639-417d-4f26-baa9-95f295928253",
@@ -186,7 +186,7 @@
       "type": "n8n-nodes-base.httpRequest",
       "typeVersion": 4.5,
       "position": [
-        -1424,
+        -1552,
         -384
       ],
       "id": "86e78327-8436-4ece-a11c-1ebab556afb6",
@@ -215,7 +215,7 @@
       "type": "n8n-nodes-base.scheduleTrigger",
       "typeVersion": 1.4,
       "position": [
-        -1648,
+        -1776,
         -496
       ],
       "id": "112ba7f5-f688-4817-82a0-897e5f15031d",
@@ -307,7 +307,7 @@
     "executionTimeout": -1,
     "availableInMCP": false
   },
-  "versionId": "69a53575-5ae2-4023-acb7-b6f0f2b2190f",
+  "versionId": "6dbc5b74-f195-4d57-9b5a-d92175665e0e",
   "meta": {
     "templateCredsSetupCompleted": true,
     "instanceId": "9daee64fcd4c60e294455109589ac2517740c253c2c006d9b408b51b7ced8ef9"
