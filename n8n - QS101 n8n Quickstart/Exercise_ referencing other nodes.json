@@ -1,0 +1,113 @@
+{
+  "name": "Exercise: referencing other nodes",
+  "nodes": [
+    {
+      "parameters": {
+        "operation": "getAllPeople"
+      },
+      "type": "n8n-nodes-base.n8nTrainingCustomerDatastore",
+      "typeVersion": 1,
+      "position": [
+        -528,
+        -64
+      ],
+      "id": "dbdeda8b-3059-45ec-849c-c0392cba770d",
+      "name": "GetCustomers"
+    },
+    {
+      "parameters": {},
+      "type": "n8n-nodes-base.manualTrigger",
+      "typeVersion": 1,
+      "position": [
+        -704,
+        -64
+      ],
+      "id": "5669d074-77f6-4c2b-8646-57f2a9a836dc",
+      "name": "Manual Trigger"
+    },
+    {
+      "parameters": {
+        "jsCode": "return [{ json: { totalCustomers: $input.all().length } }]"
+      },
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [
+        -336,
+        -64
+      ],
+      "id": "208475cb-8057-47cc-b8fc-1da0a736632f",
+      "name": "CountCustomers"
+    },
+    {
+      "parameters": {
+        "assignments": {
+          "assignments": [
+            {
+              "id": "21bca47e-19a5-4ba3-9497-b01c4401c4c4",
+              "name": "summary",
+              "value": "={{ $('GetCustomers').first().json.name }} is one of {{ $('CountCustomers').first().json.totalCustomers }} customers",
+              "type": "string"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.set",
+      "typeVersion": 3.5,
+      "position": [
+        -112,
+        -64
+      ],
+      "id": "ed816391-dd09-4c82-a10f-2147b0c33711",
+      "name": "SetSummary"
+    }
+  ],
+  "pinData": {},
+  "connections": {
+    "Manual Trigger": {
+      "main": [
+        [
+          {
+            "node": "GetCustomers",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "GetCustomers": {
+      "main": [
+        [
+          {
+            "node": "CountCustomers",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "CountCustomers": {
+      "main": [
+        [
+          {
+            "node": "SetSummary",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    }
+  },
+  "active": false,
+  "settings": {
+    "executionOrder": "v1",
+    "binaryMode": "separate"
+  },
+  "versionId": "19340512-b58d-400a-b2b6-f364fcefb86b",
+  "meta": {
+    "instanceId": "9daee64fcd4c60e294455109589ac2517740c253c2c006d9b408b51b7ced8ef9"
+  },
+  "nodeGroups": [],
+  "id": "rtQLPhFTumdgmnsY",
+  "tags": []
+}
