@@ -1,0 +1,79 @@
+{
+  "name": "Creating a data set",
+  "nodes": [
+    {
+      "parameters": {},
+      "type": "n8n-nodes-base.manualTrigger",
+      "typeVersion": 1,
+      "position": [
+        -432,
+        -48
+      ],
+      "id": "c68cbc1a-38b0-4289-b518-0c2cc7151916",
+      "name": "When clicking ‘Execute workflow’"
+    },
+    {
+      "parameters": {
+        "jsCode": "var myContacts = [\n  {\n    json: {\n      name: 'Alice',\n      email: {\n        personal: 'alice@home.com',\n        work: 'alice@wonderland.org'\n      }\n    }\n  },\n  {\n    json: {\n      name: 'Bob',\n      email: {\n        personal: 'bob@mail.com',\n        work: 'contact@thebuilder.com'\n      }\n    }\n  }\n];\nreturn myContacts;"
+      },
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [
+        -240,
+        -48
+      ],
+      "id": "a3db6110-1ea1-42aa-8805-424b90075c6b",
+      "name": "Code in JavaScript"
+    },
+    {
+      "parameters": {
+        "jsCode": "let items = $input.all();\nitems[0].json.workEmail = items[0].json.email['work'];\nreturn items;"
+      },
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [
+        -16,
+        -48
+      ],
+      "id": "8fc3ffbc-430d-4436-a97b-7016aff8f21e",
+      "name": "Code in JavaScript1"
+    }
+  ],
+  "pinData": {},
+  "connections": {
+    "When clicking ‘Execute workflow’": {
+      "main": [
+        [
+          {
+            "node": "Code in JavaScript",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Code in JavaScript": {
+      "main": [
+        [
+          {
+            "node": "Code in JavaScript1",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    }
+  },
+  "active": false,
+  "settings": {
+    "executionOrder": "v1",
+    "binaryMode": "separate"
+  },
+  "versionId": "b5eaa846-e153-4863-92dc-534e1a0bdb23",
+  "meta": {
+    "instanceId": "9daee64fcd4c60e294455109589ac2517740c253c2c006d9b408b51b7ced8ef9"
+  },
+  "nodeGroups": [],
+  "id": "9vV9L3FDNrVISCji",
+  "tags": []
+}
