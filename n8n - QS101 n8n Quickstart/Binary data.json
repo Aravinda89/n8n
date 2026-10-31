@@ -1,0 +1,107 @@
+{
+  "name": "Binary data",
+  "nodes": [
+    {
+      "parameters": {},
+      "type": "n8n-nodes-base.manualTrigger",
+      "typeVersion": 1,
+      "position": [
+        -288,
+        -96
+      ],
+      "id": "fad3946e-4afd-4cf9-968b-ca6f1dded4f4",
+      "name": "ManualTrigger"
+    },
+    {
+      "parameters": {
+        "url": "https://learn.app.n8n.cloud/webhook/apis/dog-images",
+        "options": {}
+      },
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.5,
+      "position": [
+        -112,
+        -96
+      ],
+      "id": "3164856c-1907-48a8-9d23-51d57b8b9c44",
+      "name": "GetDogURL"
+    },
+    {
+      "parameters": {
+        "url": "={{ $json.message }}",
+        "options": {}
+      },
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.5,
+      "position": [
+        80,
+        -96
+      ],
+      "id": "8a0e6e90-b615-42e8-9062-f8d41e565ebd",
+      "name": "GetDogImage"
+    },
+    {
+      "parameters": {
+        "operation": "rotate",
+        "rotate": 180,
+        "options": {}
+      },
+      "type": "n8n-nodes-base.editImage",
+      "typeVersion": 1.1,
+      "position": [
+        272,
+        -96
+      ],
+      "id": "5eeb5a37-63ea-4f11-994f-b0865fc2404b",
+      "name": "Rotate180"
+    }
+  ],
+  "pinData": {},
+  "connections": {
+    "ManualTrigger": {
+      "main": [
+        [
+          {
+            "node": "GetDogURL",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "GetDogURL": {
+      "main": [
+        [
+          {
+            "node": "GetDogImage",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "GetDogImage": {
+      "main": [
+        [
+          {
+            "node": "Rotate180",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    }
+  },
+  "active": false,
+  "settings": {
+    "executionOrder": "v1",
+    "binaryMode": "separate"
+  },
+  "versionId": "fef4ef1c-660a-496c-9420-2a0483538f52",
+  "meta": {
+    "instanceId": "9daee64fcd4c60e294455109589ac2517740c253c2c006d9b408b51b7ced8ef9"
+  },
+  "nodeGroups": [],
+  "id": "NPXxsiEMxWjpZUQQ",
+  "tags": []
+}
