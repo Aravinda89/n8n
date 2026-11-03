@@ -1,0 +1,81 @@
+{
+  "name": "Splitting data",
+  "nodes": [
+    {
+      "parameters": {},
+      "type": "n8n-nodes-base.manualTrigger",
+      "typeVersion": 1,
+      "position": [
+        -224,
+        -48
+      ],
+      "id": "6b473a45-48de-4212-8c22-8a01adc92f83",
+      "name": "When clicking ‘Execute workflow’"
+    },
+    {
+      "parameters": {
+        "url": "https://pokeapi.co/api/v2/pokemon?limit=5",
+        "options": {}
+      },
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.5,
+      "position": [
+        0,
+        -48
+      ],
+      "id": "930a6234-31ca-49e6-b866-468a476c4cb9",
+      "name": "GetPokemon"
+    },
+    {
+      "parameters": {
+        "fieldToSplitOut": "results",
+        "options": {}
+      },
+      "type": "n8n-nodes-base.splitOut",
+      "typeVersion": 1.1,
+      "position": [
+        224,
+        -48
+      ],
+      "id": "de885539-825d-41f2-91e2-db17e6127c87",
+      "name": "SplitPokemon"
+    }
+  ],
+  "pinData": {},
+  "connections": {
+    "When clicking ‘Execute workflow’": {
+      "main": [
+        [
+          {
+            "node": "GetPokemon",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "GetPokemon": {
+      "main": [
+        [
+          {
+            "node": "SplitPokemon",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    }
+  },
+  "active": false,
+  "settings": {
+    "executionOrder": "v1",
+    "binaryMode": "separate"
+  },
+  "versionId": "6e98b8dd-56c6-4b9c-be74-4c5726a136dd",
+  "meta": {
+    "instanceId": "9daee64fcd4c60e294455109589ac2517740c253c2c006d9b408b51b7ced8ef9"
+  },
+  "nodeGroups": [],
+  "id": "onu6WhXEKOBjGzzI",
+  "tags": []
+}
