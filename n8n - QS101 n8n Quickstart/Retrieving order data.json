@@ -1,0 +1,143 @@
+{
+  "name": "Retrieving order data",
+  "nodes": [
+    {
+      "parameters": {},
+      "type": "n8n-nodes-base.manualTrigger",
+      "typeVersion": 1,
+      "position": [
+        -752,
+        0
+      ],
+      "id": "ab3e0861-f95e-4007-b190-198c956a8e7e",
+      "name": "When clicking ‘Execute workflow’"
+    },
+    {
+      "parameters": {
+        "url": "https://learn.app.n8n.cloud/webhook/courses/n8n-quickstart/company-data",
+        "authentication": "genericCredentialType",
+        "genericAuthType": "httpHeaderAuth",
+        "sendHeaders": true,
+        "headerParameters": {
+          "parameters": [
+            {
+              "name": "x-assessment-id",
+              "value": "bd8a42125839c0460fbc8b451282bc6a"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.5,
+      "position": [
+        -560,
+        -96
+      ],
+      "id": "ea325d5e-7e1b-4393-884f-6fc75058f6ff",
+      "name": "GetOrderData",
+      "credentials": {
+        "httpHeaderAuth": {
+          "id": "t8VEHAUl6tSDGBtL",
+          "name": "n8n Quickstart Header Auth account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "operation": "get",
+        "dataTableId": {
+          "__rl": true,
+          "value": "5JLRlC4lfqvdS1TE",
+          "mode": "list",
+          "cachedResultName": "customers",
+          "cachedResultUrl": "/projects/jgBT6USKdydv8wf1/datatables/5JLRlC4lfqvdS1TE"
+        }
+      },
+      "type": "n8n-nodes-base.dataTable",
+      "typeVersion": 1.1,
+      "position": [
+        -560,
+        112
+      ],
+      "id": "e06ea609-6170-4604-a04a-e3babe674480",
+      "name": "GetCustomers"
+    },
+    {
+      "parameters": {
+        "mode": "combine",
+        "advanced": true,
+        "mergeByFields": {
+          "values": [
+            {
+              "field1": "customerID",
+              "field2": "customerID"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.merge",
+      "typeVersion": 3.2,
+      "position": [
+        -384,
+        -16
+      ],
+      "id": "5e55d15b-c623-4980-ad58-f10ccb9c86b2",
+      "name": "Merge"
+    }
+  ],
+  "pinData": {},
+  "connections": {
+    "When clicking ‘Execute workflow’": {
+      "main": [
+        [
+          {
+            "node": "GetOrderData",
+            "type": "main",
+            "index": 0
+          },
+          {
+            "node": "GetCustomers",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "GetCustomers": {
+      "main": [
+        [
+          {
+            "node": "Merge",
+            "type": "main",
+            "index": 1
+          }
+        ]
+      ]
+    },
+    "GetOrderData": {
+      "main": [
+        [
+          {
+            "node": "Merge",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    }
+  },
+  "active": false,
+  "settings": {
+    "executionOrder": "v1",
+    "binaryMode": "separate"
+  },
+  "versionId": "32f5265c-283e-4a95-9db1-284df269c421",
+  "meta": {
+    "instanceId": "9daee64fcd4c60e294455109589ac2517740c253c2c006d9b408b51b7ced8ef9"
+  },
+  "nodeGroups": [],
+  "id": "r8MO4Xvif48G4BXv",
+  "tags": []
+}
