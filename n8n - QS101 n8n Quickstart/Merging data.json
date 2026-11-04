@@ -1,58 +1,174 @@
 {
-  "name": "Merging data",
+  "name": "Merging Data",
   "nodes": [
     {
       "parameters": {},
       "type": "n8n-nodes-base.manualTrigger",
       "typeVersion": 1,
       "position": [
-        -304,
-        -80
+        -944,
+        -32
       ],
-      "id": "a3b35d5d-3821-4f65-9034-9fb23b4b73d1",
+      "id": "9bf71a92-8bc7-40b0-b6a7-d692ad31f604",
       "name": "When clicking ‘Execute workflow’"
     },
     {
       "parameters": {
-        "operation": "getAllPeople",
+        "operation": "get",
+        "dataTableId": {
+          "__rl": true,
+          "value": "5JLRlC4lfqvdS1TE",
+          "mode": "list",
+          "cachedResultName": "customers",
+          "cachedResultUrl": "/projects/jgBT6USKdydv8wf1/datatables/5JLRlC4lfqvdS1TE"
+        },
         "returnAll": true
       },
-      "type": "n8n-nodes-base.n8nTrainingCustomerDatastore",
-      "typeVersion": 1,
+      "type": "n8n-nodes-base.dataTable",
+      "typeVersion": 1.1,
       "position": [
-        -80,
-        -192
+        -768,
+        -144
       ],
-      "id": "9a6e6959-a439-44d9-8d57-0430a3591574",
-      "name": "GetCustomerData"
+      "id": "ec03b14a-04df-4c36-97db-a0cddffc7589",
+      "name": "GetCustomers"
     },
     {
       "parameters": {
-        "jsCode": "return [\n  {\n    json: {\n      name: 'Jay Gatsby',\n      country: {\n        name: 'US'\n      }\n    }\n  },\n  {\n    json: {\n      name: 'José Arcadio Buendía',\n      country: {\n        name: 'CO'\n      }\n    }\n  },\n  {\n    json: {\n      name: 'Max Mustermann',\n      country: {\n        name: 'DE'\n      }\n    }\n  },\n  {\n    json: {\n      name: 'John Smith',\n      country: {\n        name: 'UK'\n      }\n    }\n  }\n];"
+        "url": "https://learn.app.n8n.cloud/webhook/countries",
+        "options": {}
       },
-      "type": "n8n-nodes-base.code",
-      "typeVersion": 2,
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.5,
       "position": [
-        -80,
-        0
+        -768,
+        48
       ],
-      "id": "beefdd75-f9d4-4c97-8784-fa3dedb1385a",
-      "name": "Characters1"
+      "id": "05acce6c-b608-4452-a33a-ef98377b88df",
+      "name": "GetCountries"
     },
     {
       "parameters": {
         "mode": "combine",
-        "fieldsToMatchString": "name",
+        "advanced": true,
+        "mergeByFields": {
+          "values": [
+            {
+              "field1": "customerCountry",
+              "field2": "name"
+            }
+          ]
+        },
         "options": {}
       },
       "type": "n8n-nodes-base.merge",
       "typeVersion": 3.2,
       "position": [
-        144,
-        -112
+        -608,
+        -48
       ],
-      "id": "32760e52-e475-48e6-ad2a-d54817e60398",
+      "id": "f098ba25-d2b5-4515-a2ef-b9642e24062f",
       "name": "Merge"
+    },
+    {
+      "parameters": {
+        "operation": "update",
+        "dataTableId": {
+          "__rl": true,
+          "value": "5JLRlC4lfqvdS1TE",
+          "mode": "list",
+          "cachedResultName": "customers",
+          "cachedResultUrl": "/projects/jgBT6USKdydv8wf1/datatables/5JLRlC4lfqvdS1TE"
+        },
+        "filters": {
+          "conditions": [
+            {
+              "keyValue": "={{ $json.id }}"
+            }
+          ]
+        },
+        "columns": {
+          "mappingMode": "defineBelow",
+          "value": {
+            "region": "={{ $json.region }}",
+            "subregion": "={{ $json.subregion }}"
+          },
+          "matchingColumns": [],
+          "schema": [
+            {
+              "id": "customerID",
+              "displayName": "customerID",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "number",
+              "readOnly": false,
+              "removed": true
+            },
+            {
+              "id": "customerCountry",
+              "displayName": "customerCountry",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "readOnly": false,
+              "removed": true
+            },
+            {
+              "id": "customerEmail",
+              "displayName": "customerEmail",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "readOnly": false,
+              "removed": true
+            },
+            {
+              "id": "customerSince",
+              "displayName": "customerSince",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "dateTime",
+              "readOnly": false,
+              "removed": true
+            },
+            {
+              "id": "region",
+              "displayName": "region",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "readOnly": false,
+              "removed": false
+            },
+            {
+              "id": "subregion",
+              "displayName": "subregion",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "readOnly": false,
+              "removed": false
+            }
+          ],
+          "attemptToConvertTypes": false,
+          "convertFieldsToString": false
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.dataTable",
+      "typeVersion": 1.1,
+      "position": [
+        -448,
+        -48
+      ],
+      "id": "1cdd9551-7e50-43ee-8ac9-19336ffd3fa3",
+      "name": "UpdateCustomers"
     }
   ],
   "pinData": {},
@@ -61,19 +177,19 @@
       "main": [
         [
           {
-            "node": "GetCustomerData",
+            "node": "GetCustomers",
             "type": "main",
             "index": 0
           },
           {
-            "node": "Characters1",
+            "node": "GetCountries",
             "type": "main",
             "index": 0
           }
         ]
       ]
     },
-    "GetCustomerData": {
+    "GetCustomers": {
       "main": [
         [
           {
@@ -84,13 +200,24 @@
         ]
       ]
     },
-    "Characters1": {
+    "GetCountries": {
       "main": [
         [
           {
             "node": "Merge",
             "type": "main",
             "index": 1
+          }
+        ]
+      ]
+    },
+    "Merge": {
+      "main": [
+        [
+          {
+            "node": "UpdateCustomers",
+            "type": "main",
+            "index": 0
           }
         ]
       ]
@@ -101,11 +228,11 @@
     "executionOrder": "v1",
     "binaryMode": "separate"
   },
-  "versionId": "07c97303-19ce-428d-86c4-ebe409f14507",
+  "versionId": "ac6185b6-4e27-48d8-bf7a-c03c74f91c16",
   "meta": {
     "instanceId": "9daee64fcd4c60e294455109589ac2517740c253c2c006d9b408b51b7ced8ef9"
   },
   "nodeGroups": [],
-  "id": "Cyyu7GjHdfzdo1Qn",
+  "id": "MMmncCb9026WBc96",
   "tags": []
 }
