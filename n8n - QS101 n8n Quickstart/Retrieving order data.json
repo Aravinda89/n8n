@@ -6,8 +6,8 @@
       "type": "n8n-nodes-base.manualTrigger",
       "typeVersion": 1,
       "position": [
-        -752,
-        0
+        -768,
+        -16
       ],
       "id": "ab3e0861-f95e-4007-b190-198c956a8e7e",
       "name": "When clicking ‘Execute workflow’"
@@ -32,7 +32,7 @@
       "typeVersion": 4.5,
       "position": [
         -560,
-        -96
+        -160
       ],
       "id": "ea325d5e-7e1b-4393-884f-6fc75058f6ff",
       "name": "GetOrderData",
@@ -57,7 +57,7 @@
       "type": "n8n-nodes-base.dataTable",
       "typeVersion": 1.1,
       "position": [
-        -560,
+        -576,
         112
       ],
       "id": "e06ea609-6170-4604-a04a-e3babe674480",
@@ -80,7 +80,7 @@
       "type": "n8n-nodes-base.merge",
       "typeVersion": 3.2,
       "position": [
-        -384,
+        -336,
         -16
       ],
       "id": "5e55d15b-c623-4980-ad58-f10ccb9c86b2",
@@ -133,7 +133,7 @@
     "executionOrder": "v1",
     "binaryMode": "separate"
   },
-  "versionId": "32f5265c-283e-4a95-9db1-284df269c421",
+  "versionId": "0837af36-0e8e-46a3-9d3e-2bd72a5a4396",
   "meta": {
     "instanceId": "9daee64fcd4c60e294455109589ac2517740c253c2c006d9b408b51b7ced8ef9"
   },
