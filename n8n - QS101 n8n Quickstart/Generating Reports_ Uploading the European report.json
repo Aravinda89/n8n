@@ -6,7 +6,7 @@
       "type": "n8n-nodes-base.manualTrigger",
       "typeVersion": 1,
       "position": [
-        -1344,
+        -1584,
         96
       ],
       "id": "6438a5a2-6dd3-4345-89df-c97d8208ee29",
@@ -31,7 +31,7 @@
       "type": "n8n-nodes-base.httpRequest",
       "typeVersion": 4.5,
       "position": [
-        -1152,
+        -1408,
         -16
       ],
       "id": "93cf4312-04db-4f1a-a469-4fc4cc0b5672",
@@ -57,7 +57,7 @@
       "type": "n8n-nodes-base.dataTable",
       "typeVersion": 1.1,
       "position": [
-        -1152,
+        -1408,
         208
       ],
       "id": "799bb840-8a25-4f19-b145-5d0d1ba97845",
@@ -80,7 +80,7 @@
       "type": "n8n-nodes-base.merge",
       "typeVersion": 3.2,
       "position": [
-        -944,
+        -1232,
         96
       ],
       "id": "ee197615-8624-499f-98d8-d04cd8a67757",
@@ -104,7 +104,7 @@
       "type": "n8n-nodes-base.set",
       "typeVersion": 3.5,
       "position": [
-        -800,
+        -1088,
         96
       ],
       "id": "da0595a4-d7e9-4789-b15b-5d2622d516c1",
@@ -125,11 +125,103 @@
       "type": "n8n-nodes-base.sort",
       "typeVersion": 1,
       "position": [
-        -640,
+        -960,
         96
       ],
       "id": "6d4fbfd9-dfe5-4efc-abd4-8b71dd866035",
       "name": "SortByTotal"
+    },
+    {
+      "parameters": {
+        "conditions": {
+          "options": {
+            "caseSensitive": true,
+            "leftValue": "",
+            "typeValidation": "strict",
+            "version": 4
+          },
+          "conditions": [
+            {
+              "id": "650d1f41-661e-47e7-bc6d-a9af64275970",
+              "leftValue": "={{ [\"France\",\"Sweden\",\"Germany\",\"Ukraine\"].includes($json.customerCountry) }}",
+              "rightValue": "Europe",
+              "operator": {
+                "type": "boolean",
+                "operation": "true",
+                "singleValue": true
+              }
+            },
+            {
+              "id": "ab5c8148-af6a-4a85-8e89-d97a0c8c148f",
+              "leftValue": "",
+              "rightValue": "",
+              "operator": {
+                "type": "string",
+                "operation": "equals",
+                "name": "filter.operator.equals"
+              }
+            }
+          ],
+          "combinator": "and"
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.filter",
+      "typeVersion": 2.4,
+      "position": [
+        -832,
+        96
+      ],
+      "id": "b1746410-bf38-45f2-a575-e2eba9f7cfec",
+      "name": "EuropeOnly"
+    },
+    {
+      "parameters": {
+        "options": {}
+      },
+      "type": "n8n-nodes-base.convertToFile",
+      "typeVersion": 1.2,
+      "position": [
+        -688,
+        96
+      ],
+      "id": "a0b1d6bb-814f-44eb-9bff-c3b20b2417b8",
+      "name": "ConvertToCSV"
+    },
+    {
+      "parameters": {
+        "method": "POST",
+        "url": "https://learn.app.n8n.cloud/webhook/courses/n8n-quickstart/upload-report",
+        "authentication": "genericCredentialType",
+        "genericAuthType": "httpHeaderAuth",
+        "sendHeaders": true,
+        "headerParameters": {
+          "parameters": [
+            {
+              "name": "x-assessment-id",
+              "value": "63e68a0ea9d576b954108afb30641565"
+            }
+          ]
+        },
+        "sendBody": true,
+        "contentType": "binaryData",
+        "inputDataFieldName": "data",
+        "options": {}
+      },
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.5,
+      "position": [
+        -528,
+        96
+      ],
+      "id": "b918148c-8d9d-4e66-9a72-5482a8892deb",
+      "name": "UploadReport",
+      "credentials": {
+        "httpHeaderAuth": {
+          "id": "XHaSVKdbDGp8wqPG",
+          "name": "n8n Quickstart Header Auth account"
+        }
+      }
     }
   ],
   "pinData": {},
@@ -193,6 +285,39 @@
           }
         ]
       ]
+    },
+    "SortByTotal": {
+      "main": [
+        [
+          {
+            "node": "EuropeOnly",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "EuropeOnly": {
+      "main": [
+        [
+          {
+            "node": "ConvertToCSV",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "ConvertToCSV": {
+      "main": [
+        [
+          {
+            "node": "UploadReport",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
     }
   },
   "active": false,
@@ -200,7 +325,7 @@
     "executionOrder": "v1",
     "binaryMode": "separate"
   },
-  "versionId": "8f1a1dda-70d4-4669-a6c4-ce0631c04fdb",
+  "versionId": "18461688-9a7b-40b3-8d03-2db87d97e714",
   "meta": {
     "instanceId": "fd6526e07e7ff20a4d0cfad981693fd9a5822933899959d145283776b0637d89"
   },
