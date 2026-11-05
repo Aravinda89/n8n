@@ -1,0 +1,484 @@
+{
+  "name": "Generating Reports: Generating the regional summary",
+  "nodes": [
+    {
+      "parameters": {},
+      "id": "06967635-8d10-4efd-91ca-c288635136de",
+      "name": "When clicking ‘Execute workflow’",
+      "type": "n8n-nodes-base.manualTrigger",
+      "typeVersion": 1,
+      "position": [
+        -240,
+        96
+      ]
+    },
+    {
+      "parameters": {
+        "url": "https://learn.app.n8n.cloud/webhook/courses/n8n-quickstart/company-data",
+        "authentication": "genericCredentialType",
+        "genericAuthType": "httpHeaderAuth",
+        "sendHeaders": true,
+        "headerParameters": {
+          "parameters": [
+            {
+              "name": "x-assessment-id",
+              "value": "63e68a0ea9d576b954108afb30641565"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "id": "a43555d8-dc69-45cd-9bbf-3559d6a2e020",
+      "name": "GetOrderData",
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.5,
+      "position": [
+        -32,
+        -16
+      ],
+      "credentials": {
+        "httpHeaderAuth": {
+          "id": "XHaSVKdbDGp8wqPG",
+          "name": "n8n Quickstart Header Auth account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "operation": "get",
+        "dataTableId": {
+          "__rl": true,
+          "value": "cLwzpmURlNpLJ6Fj",
+          "mode": "list",
+          "cachedResultName": "customers",
+          "cachedResultUrl": "/projects/FicsfriI6r4lBGC1/datatables/cLwzpmURlNpLJ6Fj"
+        }
+      },
+      "id": "b2c0ee51-eaaa-4a30-acde-7da65edec270",
+      "name": "GetCustomers",
+      "type": "n8n-nodes-base.dataTable",
+      "typeVersion": 1.1,
+      "position": [
+        16,
+        208
+      ]
+    },
+    {
+      "parameters": {
+        "mode": "combine",
+        "advanced": true,
+        "mergeByFields": {
+          "values": [
+            {
+              "field1": "customerID",
+              "field2": "customerID"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "id": "560afae8-c37c-4396-8edf-8252591eac52",
+      "name": "Merge",
+      "type": "n8n-nodes-base.merge",
+      "typeVersion": 3.2,
+      "position": [
+        192,
+        96
+      ]
+    },
+    {
+      "parameters": {
+        "assignments": {
+          "assignments": [
+            {
+              "id": "1fba8981-5658-4d62-af9b-591b69fda1d2",
+              "name": "orderTotal",
+              "value": "={{ $json.orderPrice * $json.quantity }}",
+              "type": "number"
+            }
+          ]
+        },
+        "includeOtherFields": true,
+        "options": {}
+      },
+      "id": "b34e7e6f-a0f6-4bff-9b9d-3eef25c74864",
+      "name": "CalculateTotal",
+      "type": "n8n-nodes-base.set",
+      "typeVersion": 3.5,
+      "position": [
+        336,
+        96
+      ]
+    },
+    {
+      "parameters": {
+        "sortFieldsUi": {
+          "sortField": [
+            {
+              "fieldName": "orderTotal",
+              "order": "descending"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "id": "c171ba79-7c4f-4d63-9d84-ab01ac60e45b",
+      "name": "SortByTotal",
+      "type": "n8n-nodes-base.sort",
+      "typeVersion": 1,
+      "position": [
+        464,
+        96
+      ]
+    },
+    {
+      "parameters": {
+        "conditions": {
+          "options": {
+            "caseSensitive": true,
+            "leftValue": "",
+            "typeValidation": "strict",
+            "version": 4
+          },
+          "conditions": [
+            {
+              "id": "650d1f41-661e-47e7-bc6d-a9af64275970",
+              "leftValue": "={{ $json.region }}",
+              "rightValue": "Europe",
+              "operator": {
+                "type": "string",
+                "operation": "equals"
+              }
+            },
+            {
+              "id": "ab5c8148-af6a-4a85-8e89-d97a0c8c148f",
+              "leftValue": "",
+              "rightValue": "",
+              "operator": {
+                "type": "string",
+                "operation": "equals",
+                "name": "filter.operator.equals"
+              }
+            }
+          ],
+          "combinator": "and"
+        },
+        "options": {}
+      },
+      "id": "93458efd-1f2b-4f98-bda8-db0ece2c9dff",
+      "name": "EuropeOnly",
+      "type": "n8n-nodes-base.filter",
+      "typeVersion": 2.4,
+      "position": [
+        608,
+        96
+      ]
+    },
+    {
+      "parameters": {
+        "options": {}
+      },
+      "id": "13f0168a-16e7-42ec-8721-e413014ceb97",
+      "name": "ConvertToCSV",
+      "type": "n8n-nodes-base.convertToFile",
+      "typeVersion": 1.2,
+      "position": [
+        736,
+        96
+      ]
+    },
+    {
+      "parameters": {
+        "method": "POST",
+        "url": "https://learn.app.n8n.cloud/webhook/courses/n8n-quickstart/upload-report",
+        "authentication": "genericCredentialType",
+        "genericAuthType": "httpHeaderAuth",
+        "sendHeaders": true,
+        "headerParameters": {
+          "parameters": [
+            {
+              "name": "x-assessment-id",
+              "value": "63e68a0ea9d576b954108afb30641565"
+            }
+          ]
+        },
+        "sendBody": true,
+        "contentType": "binaryData",
+        "inputDataFieldName": "data",
+        "options": {}
+      },
+      "id": "d7b7ccf5-6ee8-42ec-ab7a-07df367acc03",
+      "name": "UploadReport",
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.5,
+      "position": [
+        896,
+        96
+      ],
+      "credentials": {
+        "httpHeaderAuth": {
+          "id": "XHaSVKdbDGp8wqPG",
+          "name": "n8n Quickstart Header Auth account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "fieldsToSummarize": {
+          "values": [
+            {
+              "aggregation": "sum",
+              "field": "orderTotal"
+            },
+            {
+              "field": "orderTotal"
+            }
+          ]
+        },
+        "fieldsToSplitBy": "region",
+        "options": {
+          "outputFormat": "separateItems"
+        }
+      },
+      "id": "75b72309-c613-411a-9467-1abdba05b0b3",
+      "name": "SummarizeByRegion",
+      "type": "n8n-nodes-base.summarize",
+      "typeVersion": 1.1,
+      "position": [
+        464,
+        320
+      ]
+    },
+    {
+      "parameters": {
+        "sortFieldsUi": {
+          "sortField": [
+            {
+              "fieldName": "sum_orderTotal",
+              "order": "descending"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "id": "c12cdf90-8d84-4186-8b3e-a74679a3bc9d",
+      "name": "SortSummary",
+      "type": "n8n-nodes-base.sort",
+      "typeVersion": 1,
+      "position": [
+        624,
+        320
+      ]
+    },
+    {
+      "parameters": {
+        "options": {}
+      },
+      "id": "52bca1cc-5331-446c-b47b-c9dc7ac0a568",
+      "name": "SummaryToCSV",
+      "type": "n8n-nodes-base.convertToFile",
+      "typeVersion": 1.2,
+      "position": [
+        816,
+        320
+      ]
+    },
+    {
+      "parameters": {
+        "assignments": {
+          "assignments": [
+            {
+              "id": "e1cafb12-39ea-4ff6-a498-b5d69e4ff635",
+              "name": "discord_message",
+              "value": "=[63e68a0ea9d576b954108afb30641565] Regional Sales Summary: {{ $json.region }} - {{ $json.count_orderTotal }} orders, total: ${{ $json.sum_orderTotal.toFixed(2) }}",
+              "type": "string"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "id": "61f03de9-6671-4d8f-9a84-d4bb7a6632c1",
+      "name": "BuildDiscordMessage",
+      "type": "n8n-nodes-base.set",
+      "typeVersion": 3.5,
+      "position": [
+        768,
+        544
+      ]
+    },
+    {
+      "parameters": {
+        "authentication": "webhook",
+        "content": "={{ $('BuildDiscordMessage').item.json.discord_message }}",
+        "options": {}
+      },
+      "id": "4f3fadb0-f854-4b53-be47-5085d3f7e970",
+      "name": "SendToDiscord",
+      "type": "n8n-nodes-base.discord",
+      "typeVersion": 2,
+      "position": [
+        992,
+        544
+      ],
+      "webhookId": "1e45779b-5386-42cc-b375-46b75c92dc3a",
+      "credentials": {
+        "discordWebhookApi": {
+          "id": "xCQkrzSPp1SdPHXm",
+          "name": "n8n Quickstart S2 Discord Webhook account"
+        }
+      }
+    }
+  ],
+  "pinData": {},
+  "connections": {
+    "When clicking ‘Execute workflow’": {
+      "main": [
+        [
+          {
+            "node": "GetOrderData",
+            "type": "main",
+            "index": 0
+          },
+          {
+            "node": "GetCustomers",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "GetOrderData": {
+      "main": [
+        [
+          {
+            "node": "Merge",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "GetCustomers": {
+      "main": [
+        [
+          {
+            "node": "Merge",
+            "type": "main",
+            "index": 1
+          }
+        ]
+      ]
+    },
+    "Merge": {
+      "main": [
+        [
+          {
+            "node": "CalculateTotal",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "CalculateTotal": {
+      "main": [
+        [
+          {
+            "node": "SortByTotal",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "SortByTotal": {
+      "main": [
+        [
+          {
+            "node": "EuropeOnly",
+            "type": "main",
+            "index": 0
+          },
+          {
+            "node": "SummarizeByRegion",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "EuropeOnly": {
+      "main": [
+        [
+          {
+            "node": "ConvertToCSV",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "ConvertToCSV": {
+      "main": [
+        [
+          {
+            "node": "UploadReport",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "SummarizeByRegion": {
+      "main": [
+        [
+          {
+            "node": "SortSummary",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "SortSummary": {
+      "main": [
+        [
+          {
+            "node": "SummaryToCSV",
+            "type": "main",
+            "index": 0
+          },
+          {
+            "node": "BuildDiscordMessage",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "BuildDiscordMessage": {
+      "main": [
+        [
+          {
+            "node": "SendToDiscord",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    }
+  },
+  "active": false,
+  "settings": {
+    "executionOrder": "v1",
+    "binaryMode": "separate"
+  },
+  "versionId": "2266f972-347a-4401-abab-87a789e37041",
+  "meta": {
+    "templateCredsSetupCompleted": true,
+    "instanceId": "fd6526e07e7ff20a4d0cfad981693fd9a5822933899959d145283776b0637d89"
+  },
+  "nodeGroups": [],
+  "id": "G0xfjMRvmH2BJpwe",
+  "tags": []
+}
