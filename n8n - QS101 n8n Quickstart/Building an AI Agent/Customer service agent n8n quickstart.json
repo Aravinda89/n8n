@@ -1,0 +1,102 @@
+{
+  "name": "Customer service agent n8n quickstart",
+  "nodes": [
+    {
+      "parameters": {
+        "options": {}
+      },
+      "type": "@n8n/n8n-nodes-langchain.chatTrigger",
+      "typeVersion": 1.5,
+      "position": [
+        -384,
+        -96
+      ],
+      "id": "c2787b83-ae04-430e-bbba-1240ea5fe6b3",
+      "name": "When chat message received",
+      "webhookId": "768a5ed9-b508-48a8-b1d5-5bccc9f3c9fa"
+    },
+    {
+      "parameters": {
+        "options": {
+          "systemMessage": "You are a customer service agent for a small company. Be polite, concise, and helpful. If you do not know the answer, say so honestly rather than making something up."
+        }
+      },
+      "type": "@n8n/n8n-nodes-langchain.agent",
+      "typeVersion": 3.1,
+      "position": [
+        -160,
+        -96
+      ],
+      "id": "c15e1a2b-efee-414b-8437-0d704e507cbd",
+      "name": "AI Agent"
+    },
+    {
+      "parameters": {
+        "model": {
+          "__rl": true,
+          "value": "gpt-4o",
+          "mode": "list",
+          "cachedResultName": "gpt-4o"
+        },
+        "builtInTools": {},
+        "options": {}
+      },
+      "type": "@n8n/n8n-nodes-langchain.lmChatOpenAi",
+      "typeVersion": 1.3,
+      "position": [
+        -160,
+        128
+      ],
+      "id": "2c3005e2-4cf2-4dda-b1d8-57aade5510d5",
+      "name": "OpenAI Chat Model",
+      "credentials": {
+        "openAiApi": {
+          "id": null,
+          "name": "",
+          "__aiGatewayManaged": true
+        }
+      }
+    }
+  ],
+  "pinData": {},
+  "connections": {
+    "When chat message received": {
+      "main": [
+        [
+          {
+            "node": "AI Agent",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "OpenAI Chat Model": {
+      "ai_languageModel": [
+        [
+          {
+            "node": "AI Agent",
+            "type": "ai_languageModel",
+            "index": 0
+          }
+        ]
+      ]
+    }
+  },
+  "active": false,
+  "settings": {
+    "executionOrder": "v1",
+    "binaryMode": "separate",
+    "timeSavedMode": "fixed",
+    "callerPolicy": "workflowsFromSameOwner",
+    "availableInMCP": false
+  },
+  "versionId": "42dc2b1a-c4d1-4a76-adeb-8daaf627f1d1",
+  "meta": {
+    "templateCredsSetupCompleted": true,
+    "instanceId": "fd6526e07e7ff20a4d0cfad981693fd9a5822933899959d145283776b0637d89"
+  },
+  "nodeGroups": [],
+  "id": "ohB2SzCljMsTPFLr",
+  "tags": []
+}
